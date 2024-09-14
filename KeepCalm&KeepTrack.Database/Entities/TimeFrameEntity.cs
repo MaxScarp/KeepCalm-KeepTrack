@@ -3,11 +3,11 @@
     public class TimeFrameEntity
     {
         public int TimeFrameId { get; set; }
-        public DateTime TimeFrameStart { get; set; }
-        public DateTime TimeFrameEnd { get; set; }
-        public TimeSpan TimeFrameTime { get; set; }
+        public required DateTime TimeFrameStart { get; set; }
+        public required DateTime TimeFrameEnd { get; set; }
+        public required TimeSpan TimeFrameTime { get; set; }
 
-        public int TaskId { get; set; }
+        public required int TaskId { get; set; }
         public required TaskEntity TaskEntity { get; set; }
     }
 }
