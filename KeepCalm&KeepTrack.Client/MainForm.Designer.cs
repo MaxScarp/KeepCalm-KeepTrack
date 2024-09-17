@@ -31,19 +31,17 @@
             addProjectButton = new Button();
             addTaskButton = new Button();
             addTimeFrameButton = new Button();
-            infoLabel = new Label();
             SuspendLayout();
             // 
             // addProjectButton
             // 
-            addProjectButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             addProjectButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             addProjectButton.BackColor = Color.Black;
             addProjectButton.FlatAppearance.BorderColor = Color.Black;
             addProjectButton.FlatAppearance.BorderSize = 0;
             addProjectButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
             addProjectButton.FlatAppearance.MouseOverBackColor = Color.Black;
-            addProjectButton.Location = new Point(12, 12);
+            addProjectButton.Location = new Point(15, 12);
             addProjectButton.Name = "addProjectButton";
             addProjectButton.Size = new Size(200, 48);
             addProjectButton.TabIndex = 0;
@@ -53,14 +51,13 @@
             // 
             // addTaskButton
             // 
-            addTaskButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             addTaskButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             addTaskButton.BackColor = Color.Black;
             addTaskButton.FlatAppearance.BorderColor = Color.Black;
             addTaskButton.FlatAppearance.BorderSize = 0;
             addTaskButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
             addTaskButton.FlatAppearance.MouseOverBackColor = Color.Black;
-            addTaskButton.Location = new Point(218, 12);
+            addTaskButton.Location = new Point(221, 12);
             addTaskButton.Name = "addTaskButton";
             addTaskButton.Size = new Size(200, 48);
             addTaskButton.TabIndex = 1;
@@ -70,14 +67,13 @@
             // 
             // addTimeFrameButton
             // 
-            addTimeFrameButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             addTimeFrameButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             addTimeFrameButton.BackColor = Color.Black;
             addTimeFrameButton.FlatAppearance.BorderColor = Color.Black;
             addTimeFrameButton.FlatAppearance.BorderSize = 0;
             addTimeFrameButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
             addTimeFrameButton.FlatAppearance.MouseOverBackColor = Color.Black;
-            addTimeFrameButton.Location = new Point(424, 12);
+            addTimeFrameButton.Location = new Point(427, 12);
             addTimeFrameButton.Name = "addTimeFrameButton";
             addTimeFrameButton.Size = new Size(200, 48);
             addTimeFrameButton.TabIndex = 2;
@@ -85,22 +81,12 @@
             addTimeFrameButton.UseVisualStyleBackColor = false;
             addTimeFrameButton.Click += OnAddTimeFrameButtonClicked;
             // 
-            // infoLabel
-            // 
-            infoLabel.AutoSize = true;
-            infoLabel.Location = new Point(12, 95);
-            infoLabel.Name = "infoLabel";
-            infoLabel.Size = new Size(133, 30);
-            infoLabel.TabIndex = 3;
-            infoLabel.Text = "DEBUG INFO";
-            // 
             // MainForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.DimGray;
-            ClientSize = new Size(800, 450);
-            Controls.Add(infoLabel);
+            ClientSize = new Size(642, 450);
             Controls.Add(addTimeFrameButton);
             Controls.Add(addTaskButton);
             Controls.Add(addProjectButton);
@@ -112,9 +98,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "KeepCalm&KeepTrack";
-            Load += OnMainFormLoaded;
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -122,6 +106,5 @@
         private Button addProjectButton;
         private Button addTaskButton;
         private Button addTimeFrameButton;
-        private Label infoLabel;
     }
 }
