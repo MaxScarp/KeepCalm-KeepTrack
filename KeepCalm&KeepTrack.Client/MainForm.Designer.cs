@@ -31,6 +31,7 @@
             addProjectButton = new Button();
             addTaskButton = new Button();
             addTimeFrameButton = new Button();
+            backButton = new Button();
             SuspendLayout();
             // 
             // addProjectButton
@@ -81,12 +82,28 @@
             addTimeFrameButton.UseVisualStyleBackColor = false;
             addTimeFrameButton.Click += OnAddTimeFrameButtonClicked;
             // 
+            // backButton
+            // 
+            backButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            backButton.BackColor = Color.Black;
+            backButton.FlatAppearance.BorderColor = Color.Black;
+            backButton.FlatAppearance.BorderSize = 0;
+            backButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
+            backButton.FlatAppearance.MouseOverBackColor = Color.Black;
+            backButton.Location = new Point(15, 395);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(200, 48);
+            backButton.TabIndex = 4;
+            backButton.Text = "Back";
+            backButton.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.DimGray;
             ClientSize = new Size(642, 450);
+            Controls.Add(backButton);
             Controls.Add(addTimeFrameButton);
             Controls.Add(addTaskButton);
             Controls.Add(addProjectButton);
@@ -98,6 +115,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "KeepCalm&KeepTrack";
+            Load += OnMainFormLoaded;
             ResumeLayout(false);
         }
 
@@ -106,5 +124,6 @@
         private Button addProjectButton;
         private Button addTaskButton;
         private Button addTimeFrameButton;
+        private Button backButton;
     }
 }

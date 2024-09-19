@@ -13,6 +13,8 @@ namespace KeepCalm_KeepTrack.Client
             db = new SqlDatabase();
         }
 
+
+
         private void OnAddProjectButtonClicked(object sender, EventArgs e)
         {
             AddProjectForm addProjectForm = new AddProjectForm(this);
@@ -25,6 +27,16 @@ namespace KeepCalm_KeepTrack.Client
         }
 
         private void OnAddTimeFrameButtonClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnMainFormLoaded(object sender, EventArgs e)
+        {
+            
+        }
+
+        private Label CreateTitleLabel()
         {
 
         }
