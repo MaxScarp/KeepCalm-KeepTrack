@@ -1,26 +1,27 @@
 ﻿namespace KeepCalm_KeepTrack.Client
 {
-    public partial class AddProjectForm : Form
+    public partial class AddTaskForm : Form
     {
-        private const string NO_NAME_INFO = "You have to insert a project name!";
-        private const string PROJECT_ADDED_INFO = "New project added to database";
+        private const string NO_NAME_INFO = "You have to insert a task name!";
+        private const string NO_PROJECT_ID_INFO = "You have to select a project before adding a task!";
+        private const string TASK_ADDED_INFO = "New task added to database";
 
         private readonly MainForm mainForm;
 
-        private string projectName;
-        private string projectDescription;
+        private string taskName;
+        private string taskDescription;
 
-        public AddProjectForm(MainForm mainForm)
+        public AddTaskForm(MainForm mainForm)
         {
             InitializeComponent();
 
-            projectName = string.Empty;
-            projectDescription = string.Empty;
+            taskName = string.Empty;
+            taskDescription = string.Empty;
 
             this.mainForm = mainForm;
         }
 
-        private void OnAddProjectFormClosed(object sender, FormClosedEventArgs e)
+        private void OnAddTaskFormClosed(object sender, FormClosedEventArgs e)
         {
             switch (mainForm.DataLayoutState)
             {
@@ -35,28 +36,37 @@
             }
         }
 
-        private void OnProjectNameTextChanged(object sender, EventArgs e)
+        private void OnTaskNameTextChanged(object sender, EventArgs e)
         {
-            projectName = projectNameTextBox.Text;
+            taskName = taskNameTextBox.Text;
         }
 
-        private void OnProjectDescriptionTextChanged(object sender, EventArgs e)
+        private void OnTaskDescriptionTextChanged(object sender, EventArgs e)
         {
-            projectDescription = projectDescriptionTextBox.Text;
+            taskDescription = taskDescriptionTextBox.Text;
         }
 
         private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(projectName))
+            if (string.IsNullOrWhiteSpace(taskName))
             {
                 PrintInfo(NO_NAME_INFO);
 
                 return;
             }
 
-            await mainForm.Db.AddProjectAsync(projectName, projectDescription);
+            int projectId = mainForm.selectedProjectId;
 
-            PrintInfo(PROJECT_ADDED_INFO);
+            if (projectId < 0)
+            {
+                PrintInfo(NO_PROJECT_ID_INFO);
+
+                return;
+            }
+
+            await mainForm.Db.AddTaskAsync(taskName, taskDescription, mainForm.selectedProjectId);
+
+            PrintInfo(TASK_ADDED_INFO);
 
             ClearForm();
         }
@@ -68,8 +78,8 @@
 
         private void ClearForm()
         {
-            projectNameTextBox.Text = string.Empty;
-            projectDescriptionTextBox.Text = string.Empty;
+            taskNameTextBox.Text = string.Empty;
+            taskDescriptionTextBox.Text = string.Empty;
         }
 
         private void OnInfoLabelCleaningTimerTicked(object sender, EventArgs e)

@@ -11,6 +11,63 @@ namespace KeepCalm_KeepTrack.Database
             dbFactory = new ApplicationDbContextFactory();
         }
 
+        private async Task<ProjectEntity?> GetProjectWithId(int projectId)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return await db.ProjectTable.FindAsync(projectId);
+            }
+        }
+
+        public async Task AddTaskAsync(string taskName, string taskDescription, int projectId)
+        {
+            if (dbFactory == null) return;
+
+            ProjectEntity? project = await GetProjectWithId(projectId);
+            if (project == null)
+            {
+                return;
+            }
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                TaskEntity task = new TaskEntity()
+                {
+                    ProjectEntity = project,
+                    ProjectId = project.ProjectId,
+                    TaskName = taskName,
+                    TaskDescription = taskDescription,
+                    TimeFrameEntityList = new List<TimeFrameEntity>()
+                };
+
+                await db.TaskTable.AddAsync(task);
+
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public List<TaskEntity>? GetTaskListForProjectWithId(int projectId)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return [.. db.TaskTable.Where(t => t.ProjectId == projectId)];
+            }
+        }
+
+        public List<ProjectEntity>? GetProjectList()
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return [.. db.ProjectTable];
+            }
+        }
+
         public async Task AddProjectAsync(string projectName, string projectDescription)
         {
             if (dbFactory == null) return;
@@ -84,25 +141,6 @@ namespace KeepCalm_KeepTrack.Database
                 };
 
                 await db.TaskTable.AddAsync(task);
-
-                await db.SaveChangesAsync();
-            }
-        }
-
-        public async Task AddTestProject()
-        {
-            if (dbFactory == null) return;
-
-            using (ApplicationDbContext db = dbFactory.CreateDbContext())
-            {
-                ProjectEntity project = new ProjectEntity()
-                {
-                    ProjectName = "Test Name",
-                    ProjectDescription = "Test description",
-                    TaskEntityList = new List<TaskEntity>()
-                };
-
-                await db.ProjectTable.AddAsync(project);
 
                 await db.SaveChangesAsync();
             }

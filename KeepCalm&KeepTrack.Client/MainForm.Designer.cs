@@ -28,10 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             addProjectButton = new Button();
             addTaskButton = new Button();
             addTimeFrameButton = new Button();
             backButton = new Button();
+            dataLayout = new FlowLayoutPanel();
+            verticalScrollBar = new VScrollBar();
+            titleLabel = new Label();
+            buttonsTooltip = new ToolTip(components);
             SuspendLayout();
             // 
             // addProjectButton
@@ -96,6 +101,33 @@
             backButton.TabIndex = 4;
             backButton.Text = "Back";
             backButton.UseVisualStyleBackColor = false;
+            backButton.Click += OnBackButtonClicked;
+            // 
+            // dataLayout
+            // 
+            dataLayout.BackColor = Color.DarkGray;
+            dataLayout.BackgroundImageLayout = ImageLayout.None;
+            dataLayout.Location = new Point(15, 97);
+            dataLayout.Name = "dataLayout";
+            dataLayout.Size = new Size(588, 292);
+            dataLayout.TabIndex = 5;
+            // 
+            // verticalScrollBar
+            // 
+            verticalScrollBar.Location = new Point(606, 97);
+            verticalScrollBar.Name = "verticalScrollBar";
+            verticalScrollBar.Size = new Size(21, 292);
+            verticalScrollBar.TabIndex = 6;
+            // 
+            // titleLabel
+            // 
+            titleLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            titleLabel.Location = new Point(15, 64);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(612, 30);
+            titleLabel.TabIndex = 7;
+            titleLabel.Text = "PROJECTS";
+            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -103,6 +135,9 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.DimGray;
             ClientSize = new Size(642, 450);
+            Controls.Add(titleLabel);
+            Controls.Add(verticalScrollBar);
+            Controls.Add(dataLayout);
             Controls.Add(backButton);
             Controls.Add(addTimeFrameButton);
             Controls.Add(addTaskButton);
@@ -125,5 +160,9 @@
         private Button addTaskButton;
         private Button addTimeFrameButton;
         private Button backButton;
+        private FlowLayoutPanel dataLayout;
+        private VScrollBar verticalScrollBar;
+        private Label titleLabel;
+        private ToolTip buttonsTooltip;
     }
 }

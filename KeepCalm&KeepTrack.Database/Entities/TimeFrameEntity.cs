@@ -1,6 +1,6 @@
 ﻿namespace KeepCalm_KeepTrack.Database.Entities
 {
-    public class TimeFrameEntity
+    public class TimeFrameEntity : EntityBaseClass
     {
         public int TimeFrameId { get; set; }
         public required DateTime TimeFrameStart { get; set; }

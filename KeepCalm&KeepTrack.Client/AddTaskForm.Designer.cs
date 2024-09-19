@@ -1,6 +1,6 @@
 ﻿namespace KeepCalm_KeepTrack.Client
 {
-    partial class AddProjectForm
+    partial class AddTaskForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,40 +29,40 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            projectNameTextBox = new TextBox();
-            projectDescriptionTextBox = new TextBox();
+            taskNameTextBox = new TextBox();
+            taskDescriptionTextBox = new TextBox();
             saveButton = new Button();
             infoLabel = new Label();
             closeButton = new Button();
             infoLabelCleaningTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
-            // projectNameTextBox
+            // taskNameTextBox
             // 
-            projectNameTextBox.BackColor = Color.Black;
-            projectNameTextBox.ForeColor = Color.Gainsboro;
-            projectNameTextBox.Location = new Point(12, 12);
-            projectNameTextBox.MaxLength = 255;
-            projectNameTextBox.Name = "projectNameTextBox";
-            projectNameTextBox.PlaceholderText = "Project Name";
-            projectNameTextBox.Size = new Size(419, 35);
-            projectNameTextBox.TabIndex = 0;
-            projectNameTextBox.TextAlign = HorizontalAlignment.Center;
-            projectNameTextBox.TextChanged += OnProjectNameTextChanged;
+            taskNameTextBox.BackColor = Color.Black;
+            taskNameTextBox.ForeColor = Color.Gainsboro;
+            taskNameTextBox.Location = new Point(12, 12);
+            taskNameTextBox.MaxLength = 255;
+            taskNameTextBox.Name = "taskNameTextBox";
+            taskNameTextBox.PlaceholderText = "Task Name";
+            taskNameTextBox.Size = new Size(419, 35);
+            taskNameTextBox.TabIndex = 0;
+            taskNameTextBox.TextAlign = HorizontalAlignment.Center;
+            taskNameTextBox.TextChanged += OnTaskNameTextChanged;
             // 
-            // projectDescriptionTextBox
+            // taskDescriptionTextBox
             // 
-            projectDescriptionTextBox.BackColor = Color.Black;
-            projectDescriptionTextBox.ForeColor = Color.Gainsboro;
-            projectDescriptionTextBox.Location = new Point(12, 53);
-            projectDescriptionTextBox.MaxLength = 2048;
-            projectDescriptionTextBox.Multiline = true;
-            projectDescriptionTextBox.Name = "projectDescriptionTextBox";
-            projectDescriptionTextBox.PlaceholderText = "Project Description (optional)";
-            projectDescriptionTextBox.Size = new Size(419, 104);
-            projectDescriptionTextBox.TabIndex = 1;
-            projectDescriptionTextBox.TextAlign = HorizontalAlignment.Center;
-            projectDescriptionTextBox.TextChanged += OnProjectDescriptionTextChanged;
+            taskDescriptionTextBox.BackColor = Color.Black;
+            taskDescriptionTextBox.ForeColor = Color.Gainsboro;
+            taskDescriptionTextBox.Location = new Point(12, 53);
+            taskDescriptionTextBox.MaxLength = 2048;
+            taskDescriptionTextBox.Multiline = true;
+            taskDescriptionTextBox.Name = "taskDescriptionTextBox";
+            taskDescriptionTextBox.PlaceholderText = "Task Description (optional)";
+            taskDescriptionTextBox.Size = new Size(419, 104);
+            taskDescriptionTextBox.TabIndex = 1;
+            taskDescriptionTextBox.TextAlign = HorizontalAlignment.Center;
+            taskDescriptionTextBox.TextChanged += OnTaskDescriptionTextChanged;
             // 
             // saveButton
             // 
@@ -109,7 +109,7 @@
             infoLabelCleaningTimer.Interval = 3000;
             infoLabelCleaningTimer.Tick += OnInfoLabelCleaningTimerTicked;
             // 
-            // AddProjectForm
+            // AddTaskForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -118,25 +118,25 @@
             Controls.Add(closeButton);
             Controls.Add(infoLabel);
             Controls.Add(saveButton);
-            Controls.Add(projectDescriptionTextBox);
-            Controls.Add(projectNameTextBox);
+            Controls.Add(taskDescriptionTextBox);
+            Controls.Add(taskNameTextBox);
             Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.Gainsboro;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "AddProjectForm";
+            Name = "AddTaskForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Project Details";
-            FormClosed += OnAddProjectFormClosed;
+            Text = "Task Details";
+            FormClosed += OnAddTaskFormClosed;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox projectNameTextBox;
-        private TextBox projectDescriptionTextBox;
+        private TextBox taskNameTextBox;
+        private TextBox taskDescriptionTextBox;
         private Button saveButton;
         private Label infoLabel;
         private Button closeButton;
