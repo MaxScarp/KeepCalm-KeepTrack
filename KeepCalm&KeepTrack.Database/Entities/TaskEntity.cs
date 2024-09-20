@@ -7,8 +7,8 @@
         public string? TaskDescription { get; set; }
 
         public required int ProjectId { get; set; }
-        public required ProjectEntity ProjectEntity { get; set; }
+        public ProjectEntity? ProjectEntity { get; set; }
 
-        public required List<TimeFrameEntity> TimeFrameEntityList { get; set; }
+        public List<TimeFrameEntity>? TimeFrameEntityList { get; set; }
     }
 }

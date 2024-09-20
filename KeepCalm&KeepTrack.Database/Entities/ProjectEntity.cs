@@ -6,6 +6,6 @@
         public required string ProjectName { get; set; }
         public string? ProjectDescription { get; set; }
 
-        public required List<TaskEntity> TaskEntityList { get; set; }
+        public List<TaskEntity>? TaskEntityList { get; set; }
     }
 }
