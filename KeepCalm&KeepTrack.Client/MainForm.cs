@@ -159,10 +159,32 @@ namespace KeepCalm_KeepTrack.Client
         //    titleLabel.Text = TASK_TITLE;
         //}
 
-        private void OnTaskButtonClicked(object? sender, EventArgs e)
+        private async void OnTaskButtonClicked(object? sender, EventArgs e)
         {
-            //TimeFrameForm timeFrameForm = new TimeFrameForm();
-            //timeFrameForm.ShowDialog();
+            Button? button = sender as Button;
+            if (button == null)
+            {
+                return;
+            }
+
+            if (button.Tag == null)
+            {
+                return;
+            }
+
+            if (!int.TryParse(button.Tag.ToString(), out int taskId))
+            {
+                return;
+            }
+
+            TaskEntity? selectedTask = await db.GetTaskWithIdAsync(taskId);
+            if (selectedTask == null)
+            {
+                return;
+            }
+
+            TimeFrameForm timeFrameForm = new TimeFrameForm(taskId, selectedTask.TaskName, selectedTask.TaskDescription);
+            timeFrameForm.Show();
         }
 
         private void UpdateProjectUI()

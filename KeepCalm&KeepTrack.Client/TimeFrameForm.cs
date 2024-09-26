@@ -4,12 +4,14 @@
     {
         public event EventHandler? OnCustomClosed;
 
+        private const string NO_DESCRIPTION_FOUND = "EMPTY";
+
         private readonly int selectedTaskId;
 
         private readonly string taskName;
-        private readonly string taskDescription;
+        private readonly string? taskDescription;
 
-        public TimeFrameForm(int selectedTaskId, string taskName, string taskDescription)
+        public TimeFrameForm(int selectedTaskId, string taskName, string? taskDescription)
         {
             InitializeComponent();
 
@@ -21,7 +23,7 @@
         private void OnTimeFrameFormLoaded(object sender, EventArgs e)
         {
             taskNameTextBox.Text = taskName;
-            taskDescriptionTextBox.Text = taskDescription;
+            taskDescriptionTextBox.Text = string.IsNullOrWhiteSpace(taskDescription) ? taskDescription : NO_DESCRIPTION_FOUND;
 
             infoLabel.Text = "TEST";
         }

@@ -11,6 +11,16 @@ namespace KeepCalm_KeepTrack.Database
             dbFactory = new ApplicationDbContextFactory();
         }
 
+        public async Task<TaskEntity?> GetTaskWithIdAsync(int taskId)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return await db.TaskTable.FindAsync(taskId);
+            }
+        }
+
         public async Task AddTaskAsync(string taskName, string taskDescription, int projectId)
         {
             if (dbFactory == null) return;
