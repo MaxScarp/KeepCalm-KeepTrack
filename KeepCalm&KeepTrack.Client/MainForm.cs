@@ -9,16 +9,19 @@ namespace KeepCalm_KeepTrack.Client
         private const string TASK_TITLE = "TASKS";
         private const string TIME_FRAME_TITLE = "TIME FRAMES";
 
-        public readonly SqlDatabase Db;
+        private readonly SqlDatabase db;
 
-        public DataLayoutState DataLayoutState;
-        public int selectedProjectId;
+        private DataLayoutState dataLayoutState;
+        private int selectedProjectId;
+
+        private AddProjectForm? addProjectForm;
+        private AddTaskForm? addTaskForm;
 
         public MainForm()
         {
             InitializeComponent();
 
-            Db = new SqlDatabase();
+            db = new SqlDatabase();
         }
 
         private void OnAddTimeFrameButtonClicked(object sender, EventArgs e)
@@ -28,14 +31,73 @@ namespace KeepCalm_KeepTrack.Client
 
         private void OnAddTaskButtonClicked(object sender, EventArgs e)
         {
-            AddTaskForm addTaskForm = new AddTaskForm(this);
-            addTaskForm.ShowDialog();
+            if (selectedProjectId <= -1)
+            {
+                return;
+            }
+
+            addTaskForm = new AddTaskForm(db, selectedProjectId);
+            addTaskForm.Show();
+
+            addTaskForm.OnCustomClosed += AddTaskForm_OnCustomClosed;
+
+            Enabled = false;
+        }
+
+        private void AddTaskForm_OnCustomClosed(object? sender, EventArgs e)
+        {
+            if (addTaskForm == null)
+            {
+                return;
+            }
+
+            addTaskForm.OnCustomClosed -= AddTaskForm_OnCustomClosed;
+
+            CheckDataLayoutStateAndUpdateUI();
+
+            addTaskForm = null;
+
+            Enabled = true;
+        }
+
+        private void CheckDataLayoutStateAndUpdateUI()
+        {
+            switch (dataLayoutState)
+            {
+                case DataLayoutState.PROJECT:
+                    UpdateProjectUI();
+                    break;
+                case DataLayoutState.TASK:
+                case DataLayoutState.TIME_FRAME:
+                    UpdateTaskUI(selectedProjectId);
+                    break;
+            }
         }
 
         private void OnAddProjectButtonClicked(object sender, EventArgs e)
         {
-            AddProjectForm addProjectForm = new AddProjectForm(this);
-            addProjectForm.ShowDialog();
+            addProjectForm = new AddProjectForm(db);
+            addProjectForm.Show();
+
+            addProjectForm.OnCustomClosed += AddProjectForm_OnCustomClosed;
+
+            Enabled = false;
+        }
+
+        private void AddProjectForm_OnCustomClosed(object? sender, EventArgs e)
+        {
+            if (addProjectForm == null)
+            {
+                return;
+            }
+
+            addProjectForm.OnCustomClosed -= AddProjectForm_OnCustomClosed;
+
+            CheckDataLayoutStateAndUpdateUI();
+
+            addProjectForm = null;
+
+            Enabled = true;
         }
 
         private void OnMainFormLoaded(object sender, EventArgs e)
@@ -43,42 +105,69 @@ namespace KeepCalm_KeepTrack.Client
             UpdateProjectUI();
         }
 
-        public void UpdateTaskUI(int projectId)
+        private void UpdateTaskUI(int projectId)
         {
-            List<TaskEntity>? taskList = Db.GetTaskListForProjectWithId(projectId);
-            if (taskList == null || taskList.Count <= 0)
-            {
-                return;
-            }
-
             dataLayout.Controls.Clear();
 
-            foreach (TaskEntity task in taskList)
-            {
-                Button taskButton = ButtonFactory.CreateButton(task);
-
-                taskButton.Tag = task.TaskId;
-                taskButton.Text = task.TaskName;
-                buttonsTooltip.SetToolTip(taskButton, task.TaskDescription);
-
-                taskButton.Click += OnTaskButtonClicked;
-
-                dataLayout.Controls.Add(taskButton);
-            }
-
             selectedProjectId = projectId;
-            DataLayoutState = DataLayoutState.TASK;
+            dataLayoutState = DataLayoutState.TASK;
             titleLabel.Text = TASK_TITLE;
+
+            List<TaskEntity>? taskList = db.GetTaskListForProjectWithId(projectId);
+            if (taskList != null || taskList?.Count > 0)
+            {
+                foreach (TaskEntity task in taskList)
+                {
+                    Button taskButton = ButtonFactory.CreateButton(task);
+
+                    taskButton.Tag = task.TaskId;
+                    taskButton.Text = task.TaskName;
+                    buttonsTooltip.SetToolTip(taskButton, task.TaskDescription);
+
+                    taskButton.Click += OnTaskButtonClicked;
+
+                    dataLayout.Controls.Add(taskButton);
+                }
+            }
         }
+
+        //public void UpdateTimeFrameUI(int taskId)
+        //{
+        //    List<TaskEntity>? taskList = Db.GetTaskListForProjectWithId(projectId);
+        //    if (taskList == null || taskList.Count <= 0)
+        //    {
+        //        return;
+        //    }
+
+        //    dataLayout.Controls.Clear();
+
+        //    foreach (TaskEntity task in taskList)
+        //    {
+        //        Button taskButton = ButtonFactory.CreateButton(task);
+
+        //        taskButton.Tag = task.TaskId;
+        //        taskButton.Text = task.TaskName;
+        //        buttonsTooltip.SetToolTip(taskButton, task.TaskDescription);
+
+        //        taskButton.Click += OnTaskButtonClicked;
+
+        //        dataLayout.Controls.Add(taskButton);
+        //    }
+
+        //    selectedProjectId = projectId;
+        //    DataLayoutState = DataLayoutState.TASK;
+        //    titleLabel.Text = TASK_TITLE;
+        //}
 
         private void OnTaskButtonClicked(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //TimeFrameForm timeFrameForm = new TimeFrameForm();
+            //timeFrameForm.ShowDialog();
         }
 
-        public void UpdateProjectUI()
+        private void UpdateProjectUI()
         {
-            List<ProjectEntity>? projectList = Db.GetProjectList();
+            List<ProjectEntity>? projectList = db.GetProjectList();
             if (projectList == null || projectList.Count <= 0)
             {
                 return;
@@ -100,7 +189,7 @@ namespace KeepCalm_KeepTrack.Client
             }
 
             selectedProjectId = -1;
-            DataLayoutState = DataLayoutState.PROJECT;
+            dataLayoutState = DataLayoutState.PROJECT;
             titleLabel.Text = PROJECT_TITLE;
         }
 
@@ -127,7 +216,7 @@ namespace KeepCalm_KeepTrack.Client
 
         private void OnBackButtonClicked(object sender, EventArgs e)
         {
-            switch (DataLayoutState)
+            switch (dataLayoutState)
             {
                 case DataLayoutState.PROJECT:
                     break;

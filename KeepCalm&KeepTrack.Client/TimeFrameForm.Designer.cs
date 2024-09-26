@@ -1,6 +1,6 @@
 ﻿namespace KeepCalm_KeepTrack.Client
 {
-    partial class AddTaskForm
+    partial class TimeFrameForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,57 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            taskNameTextBox = new TextBox();
-            taskDescriptionTextBox = new TextBox();
-            saveButton = new Button();
+            startStopButton = new Button();
             infoLabel = new Label();
             closeButton = new Button();
-            infoLabelCleaningTimer = new System.Windows.Forms.Timer(components);
+            taskDescriptionTextBox = new TextBox();
+            taskNameTextBox = new TextBox();
             SuspendLayout();
             // 
-            // taskNameTextBox
+            // startStopButton
             // 
-            taskNameTextBox.BackColor = Color.Black;
-            taskNameTextBox.ForeColor = Color.Gainsboro;
-            taskNameTextBox.Location = new Point(12, 12);
-            taskNameTextBox.MaxLength = 255;
-            taskNameTextBox.Name = "taskNameTextBox";
-            taskNameTextBox.PlaceholderText = "Task Name";
-            taskNameTextBox.Size = new Size(419, 35);
-            taskNameTextBox.TabIndex = 0;
-            taskNameTextBox.TextAlign = HorizontalAlignment.Center;
-            taskNameTextBox.TextChanged += OnTaskNameTextChanged;
-            // 
-            // taskDescriptionTextBox
-            // 
-            taskDescriptionTextBox.BackColor = Color.Black;
-            taskDescriptionTextBox.ForeColor = Color.Gainsboro;
-            taskDescriptionTextBox.Location = new Point(12, 53);
-            taskDescriptionTextBox.MaxLength = 2048;
-            taskDescriptionTextBox.Multiline = true;
-            taskDescriptionTextBox.Name = "taskDescriptionTextBox";
-            taskDescriptionTextBox.PlaceholderText = "Task Description (optional)";
-            taskDescriptionTextBox.Size = new Size(419, 104);
-            taskDescriptionTextBox.TabIndex = 1;
-            taskDescriptionTextBox.TextAlign = HorizontalAlignment.Center;
-            taskDescriptionTextBox.TextChanged += OnTaskDescriptionTextChanged;
-            // 
-            // saveButton
-            // 
-            saveButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            saveButton.BackColor = Color.Black;
-            saveButton.FlatAppearance.BorderColor = Color.Black;
-            saveButton.FlatAppearance.BorderSize = 0;
-            saveButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
-            saveButton.FlatAppearance.MouseOverBackColor = Color.Black;
-            saveButton.Location = new Point(12, 248);
-            saveButton.Name = "saveButton";
-            saveButton.Size = new Size(200, 48);
-            saveButton.TabIndex = 2;
-            saveButton.Text = "Save";
-            saveButton.UseVisualStyleBackColor = false;
-            saveButton.Click += OnSaveButtonClicked;
+            startStopButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            startStopButton.BackColor = Color.Black;
+            startStopButton.FlatAppearance.BorderColor = Color.Black;
+            startStopButton.FlatAppearance.BorderSize = 0;
+            startStopButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
+            startStopButton.FlatAppearance.MouseOverBackColor = Color.Black;
+            startStopButton.Location = new Point(12, 248);
+            startStopButton.Name = "startStopButton";
+            startStopButton.Size = new Size(200, 48);
+            startStopButton.TabIndex = 2;
+            startStopButton.Text = "Start/Stop";
+            startStopButton.UseVisualStyleBackColor = false;
+            startStopButton.Click += OnStartStopButtonClicked;
             // 
             // infoLabel
             // 
@@ -104,12 +75,32 @@
             closeButton.UseVisualStyleBackColor = false;
             closeButton.Click += OnCloseButtonClicked;
             // 
-            // infoLabelCleaningTimer
+            // taskDescriptionTextBox
             // 
-            infoLabelCleaningTimer.Interval = 3000;
-            infoLabelCleaningTimer.Tick += OnInfoLabelCleaningTimerTicked;
+            taskDescriptionTextBox.BackColor = Color.Black;
+            taskDescriptionTextBox.Enabled = false;
+            taskDescriptionTextBox.ForeColor = Color.Gainsboro;
+            taskDescriptionTextBox.Location = new Point(12, 53);
+            taskDescriptionTextBox.MaxLength = 2048;
+            taskDescriptionTextBox.Multiline = true;
+            taskDescriptionTextBox.Name = "taskDescriptionTextBox";
+            taskDescriptionTextBox.Size = new Size(419, 104);
+            taskDescriptionTextBox.TabIndex = 1;
+            taskDescriptionTextBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // AddTaskForm
+            // taskNameTextBox
+            // 
+            taskNameTextBox.BackColor = Color.Black;
+            taskNameTextBox.Enabled = false;
+            taskNameTextBox.ForeColor = Color.Gainsboro;
+            taskNameTextBox.Location = new Point(12, 12);
+            taskNameTextBox.MaxLength = 255;
+            taskNameTextBox.Name = "taskNameTextBox";
+            taskNameTextBox.Size = new Size(419, 35);
+            taskNameTextBox.TabIndex = 0;
+            taskNameTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TimeFrameForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -117,28 +108,28 @@
             ClientSize = new Size(443, 308);
             Controls.Add(closeButton);
             Controls.Add(infoLabel);
-            Controls.Add(saveButton);
+            Controls.Add(startStopButton);
             Controls.Add(taskDescriptionTextBox);
             Controls.Add(taskNameTextBox);
             Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.Gainsboro;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "AddTaskForm";
+            Name = "TimeFrameForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Task Details";
+            Text = "Time Frame Details";
+            FormClosed += OnTimeFrameFormClosed;
+            Load += OnTimeFrameFormLoaded;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private TextBox taskNameTextBox;
-        private TextBox taskDescriptionTextBox;
-        private Button saveButton;
+        private Button startStopButton;
         private Label infoLabel;
         private Button closeButton;
-        private System.Windows.Forms.Timer infoLabelCleaningTimer;
+        private TextBox taskDescriptionTextBox;
+        private TextBox taskNameTextBox;
     }
 }

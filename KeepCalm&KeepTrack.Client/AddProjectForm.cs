@@ -1,38 +1,27 @@
-﻿namespace KeepCalm_KeepTrack.Client
+﻿using KeepCalm_KeepTrack.Database;
+
+namespace KeepCalm_KeepTrack.Client
 {
     public partial class AddProjectForm : Form
     {
+        public event EventHandler? OnCustomClosed;
+
         private const string NO_NAME_INFO = "You have to insert a project name!";
         private const string PROJECT_ADDED_INFO = "New project added to database";
 
-        private readonly MainForm mainForm;
+        private readonly SqlDatabase db;
 
         private string projectName;
         private string projectDescription;
 
-        public AddProjectForm(MainForm mainForm)
+        public AddProjectForm(SqlDatabase db)
         {
             InitializeComponent();
 
+            this.db = db;
+
             projectName = string.Empty;
             projectDescription = string.Empty;
-
-            this.mainForm = mainForm;
-        }
-
-        private void OnAddProjectFormClosed(object sender, FormClosedEventArgs e)
-        {
-            switch (mainForm.DataLayoutState)
-            {
-                case DataLayoutState.PROJECT:
-                    mainForm.UpdateProjectUI();
-                    break;
-                case DataLayoutState.TASK:
-                    mainForm.UpdateTaskUI(mainForm.selectedProjectId);
-                    break;
-                case DataLayoutState.TIME_FRAME:
-                    break;
-            }
         }
 
         private void OnProjectNameTextChanged(object sender, EventArgs e)
@@ -54,7 +43,7 @@
                 return;
             }
 
-            await mainForm.Db.AddProjectAsync(projectName, projectDescription);
+            await db.AddProjectAsync(projectName, projectDescription);
 
             PrintInfo(PROJECT_ADDED_INFO);
 
@@ -63,6 +52,8 @@
 
         private void OnCloseButtonClicked(object sender, EventArgs e)
         {
+            OnCustomClosed?.Invoke(this, EventArgs.Empty);
+
             Close();
         }
 

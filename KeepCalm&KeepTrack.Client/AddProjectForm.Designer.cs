@@ -128,7 +128,6 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Project Details";
-            FormClosed += OnAddProjectFormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

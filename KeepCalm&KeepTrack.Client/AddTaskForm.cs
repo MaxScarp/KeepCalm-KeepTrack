@@ -1,39 +1,30 @@
-﻿namespace KeepCalm_KeepTrack.Client
+﻿using KeepCalm_KeepTrack.Database;
+
+namespace KeepCalm_KeepTrack.Client
 {
     public partial class AddTaskForm : Form
     {
+        public event EventHandler? OnCustomClosed;
+
         private const string NO_NAME_INFO = "You have to insert a task name!";
         private const string NO_PROJECT_ID_INFO = "You have to select a project before adding a task!";
         private const string TASK_ADDED_INFO = "New task added to database";
 
-        private readonly MainForm mainForm;
+        private readonly SqlDatabase db;
+        private readonly int selectedProjectId;
 
         private string taskName;
         private string taskDescription;
 
-        public AddTaskForm(MainForm mainForm)
+        public AddTaskForm(SqlDatabase db, int selectedProjectId)
         {
             InitializeComponent();
 
+            this.db = db;
+            this.selectedProjectId = selectedProjectId;
+
             taskName = string.Empty;
             taskDescription = string.Empty;
-
-            this.mainForm = mainForm;
-        }
-
-        private void OnAddTaskFormClosed(object sender, FormClosedEventArgs e)
-        {
-            switch (mainForm.DataLayoutState)
-            {
-                case DataLayoutState.PROJECT:
-                    mainForm.UpdateProjectUI();
-                    break;
-                case DataLayoutState.TASK:
-                    mainForm.UpdateTaskUI(mainForm.selectedProjectId);
-                    break;
-                case DataLayoutState.TIME_FRAME:
-                    break;
-            }
         }
 
         private void OnTaskNameTextChanged(object sender, EventArgs e)
@@ -55,7 +46,7 @@
                 return;
             }
 
-            int projectId = mainForm.selectedProjectId;
+            int projectId = selectedProjectId;
 
             if (projectId < 0)
             {
@@ -64,7 +55,7 @@
                 return;
             }
 
-            await mainForm.Db.AddTaskAsync(taskName, taskDescription, mainForm.selectedProjectId);
+            await db.AddTaskAsync(taskName, taskDescription, selectedProjectId);
 
             PrintInfo(TASK_ADDED_INFO);
 
@@ -73,6 +64,8 @@
 
         private void OnCloseButtonClicked(object sender, EventArgs e)
         {
+            OnCustomClosed?.Invoke(this, EventArgs.Empty);
+
             Close();
         }
 
