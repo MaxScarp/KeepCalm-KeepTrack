@@ -10,6 +10,7 @@ namespace KeepCalm_KeepTrack.Client
         private const string TIME_FRAME_TITLE = "TIME FRAMES";
 
         private readonly SqlDatabase db;
+        private readonly Dictionary<int, System.Timers.Timer> timeFrameIdTimerDictionary;
 
         private DataLayoutState dataLayoutState;
         private int selectedProjectId;
@@ -22,6 +23,7 @@ namespace KeepCalm_KeepTrack.Client
             InitializeComponent();
 
             db = new SqlDatabase();
+            timeFrameIdTimerDictionary = new Dictionary<int, System.Timers.Timer>();
         }
 
         private void OnAddTimeFrameButtonClicked(object sender, EventArgs e)
@@ -183,8 +185,14 @@ namespace KeepCalm_KeepTrack.Client
                 return;
             }
 
-            TimeFrameForm timeFrameForm = new TimeFrameForm(taskId, selectedTask.TaskName, selectedTask.TaskDescription);
-            timeFrameForm.Show();
+            List<TimeFrameEntity>? timeFrameEntityList = db.GetTimeFrameListForTaskWithId(taskId);
+            if (timeFrameEntityList == null || timeFrameEntityList.Count <= 0)
+            {
+                TimeFrameForm timeFrameForm = new TimeFrameForm(taskId, selectedTask.TaskName, selectedTask.TaskDescription, db);
+                timeFrameForm.Show();
+
+                return;
+            }
         }
 
         private void UpdateProjectUI()

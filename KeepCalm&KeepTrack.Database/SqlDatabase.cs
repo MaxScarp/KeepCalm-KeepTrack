@@ -11,6 +11,38 @@ namespace KeepCalm_KeepTrack.Database
             dbFactory = new ApplicationDbContextFactory();
         }
 
+        public List<TimeFrameEntity>? GetTimeFrameListForTaskWithId(int taskId)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return [.. db.TimeFrameTable.Where(tf => tf.TaskId == taskId)];
+            }
+        }
+
+        public async Task<TimeFrameEntity?> AddEmptyTimeFrameAsync(int taskId)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                TimeFrameEntity timeFrame = new TimeFrameEntity()
+                {
+                    TimeFrameStart = DateTime.MinValue,
+                    TimeFrameEnd = DateTime.MinValue,
+                    TimeFrameTime = TimeSpan.MinValue,
+                    TaskId = taskId
+                };
+
+                await db.TimeFrameTable.AddAsync(timeFrame);
+
+                await db.SaveChangesAsync();
+
+                return timeFrame;
+            }
+        }
+
         public async Task<TaskEntity?> GetTaskWithIdAsync(int taskId)
         {
             if (dbFactory == null) return null;
