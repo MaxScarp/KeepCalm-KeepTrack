@@ -31,11 +31,11 @@
             components = new System.ComponentModel.Container();
             addProjectButton = new Button();
             addTaskButton = new Button();
-            addTimeFrameButton = new Button();
             backButton = new Button();
             dataLayout = new FlowLayoutPanel();
             titleLabel = new Label();
             buttonsTooltip = new ToolTip(components);
+            showTotalTimeButton = new Button();
             SuspendLayout();
             // 
             // addProjectButton
@@ -69,22 +69,6 @@
             addTaskButton.Text = "Add Task";
             addTaskButton.UseVisualStyleBackColor = false;
             addTaskButton.Click += OnAddTaskButtonClicked;
-            // 
-            // addTimeFrameButton
-            // 
-            addTimeFrameButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            addTimeFrameButton.BackColor = Color.Black;
-            addTimeFrameButton.FlatAppearance.BorderColor = Color.Black;
-            addTimeFrameButton.FlatAppearance.BorderSize = 0;
-            addTimeFrameButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
-            addTimeFrameButton.FlatAppearance.MouseOverBackColor = Color.Black;
-            addTimeFrameButton.Location = new Point(427, 12);
-            addTimeFrameButton.Name = "addTimeFrameButton";
-            addTimeFrameButton.Size = new Size(200, 48);
-            addTimeFrameButton.TabIndex = 2;
-            addTimeFrameButton.Text = "Add Time Frame";
-            addTimeFrameButton.UseVisualStyleBackColor = false;
-            addTimeFrameButton.Click += OnAddTimeFrameButtonClicked;
             // 
             // backButton
             // 
@@ -122,16 +106,32 @@
             titleLabel.Text = "PROJECTS";
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // showTotalTimeButton
+            // 
+            showTotalTimeButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            showTotalTimeButton.BackColor = Color.Black;
+            showTotalTimeButton.FlatAppearance.BorderColor = Color.Black;
+            showTotalTimeButton.FlatAppearance.BorderSize = 0;
+            showTotalTimeButton.FlatAppearance.MouseDownBackColor = Color.Gainsboro;
+            showTotalTimeButton.FlatAppearance.MouseOverBackColor = Color.Black;
+            showTotalTimeButton.Location = new Point(430, 12);
+            showTotalTimeButton.Name = "showTotalTimeButton";
+            showTotalTimeButton.Size = new Size(200, 48);
+            showTotalTimeButton.TabIndex = 8;
+            showTotalTimeButton.Text = "Show Total Time";
+            showTotalTimeButton.UseVisualStyleBackColor = false;
+            showTotalTimeButton.Click += OnShowTotalTimeButtonClicked;
+            // 
             // MainForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.DimGray;
             ClientSize = new Size(642, 450);
+            Controls.Add(showTotalTimeButton);
             Controls.Add(titleLabel);
             Controls.Add(dataLayout);
             Controls.Add(backButton);
-            Controls.Add(addTimeFrameButton);
             Controls.Add(addTaskButton);
             Controls.Add(addProjectButton);
             Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -150,10 +150,10 @@
 
         private Button addProjectButton;
         private Button addTaskButton;
-        private Button addTimeFrameButton;
         private Button backButton;
         private FlowLayoutPanel dataLayout;
         private Label titleLabel;
         private ToolTip buttonsTooltip;
+        private Button showTotalTimeButton;
     }
 }

@@ -7,10 +7,8 @@ namespace KeepCalm_KeepTrack.Client
     {
         private const string PROJECT_TITLE = "PROJECTS";
         private const string TASK_TITLE = "TASKS";
-        private const string TIME_FRAME_TITLE = "TIME FRAMES";
 
         private readonly SqlDatabase db;
-        private readonly Dictionary<int, System.Timers.Timer> timeFrameIdTimerDictionary;
 
         private DataLayoutState dataLayoutState;
         private int selectedProjectId;
@@ -23,12 +21,29 @@ namespace KeepCalm_KeepTrack.Client
             InitializeComponent();
 
             db = new SqlDatabase();
-            timeFrameIdTimerDictionary = new Dictionary<int, System.Timers.Timer>();
         }
 
-        private void OnAddTimeFrameButtonClicked(object sender, EventArgs e)
+        private void UpdateButtonsUI()
         {
+            addTaskButton.Visible = dataLayoutState != DataLayoutState.PROJECT;
+            backButton.Visible = dataLayoutState != DataLayoutState.PROJECT;
+            showTotalTimeButton.Visible = dataLayout.Controls.Count > 0;
+        }
 
+        private void OnShowTotalTimeButtonClicked(object sender, EventArgs e)
+        {
+            //TODO - cercare di selezionare un projectID in qualche maniera ed utilizzarlo, forse bisogna cambiare form eccetera
+            if (selectedProjectId <= -1)
+            {
+                return;
+            }
+
+            addTaskForm = new AddTaskForm(db, selectedProjectId);
+            addTaskForm.Show();
+
+            addTaskForm.OnCustomClosed += AddTaskForm_OnCustomClosed;
+
+            Enabled = false;
         }
 
         private void OnAddTaskButtonClicked(object sender, EventArgs e)
@@ -74,6 +89,8 @@ namespace KeepCalm_KeepTrack.Client
                     UpdateTaskUI(selectedProjectId);
                     break;
             }
+
+            UpdateButtonsUI();
         }
 
         private void OnAddProjectButtonClicked(object sender, EventArgs e)
@@ -105,6 +122,7 @@ namespace KeepCalm_KeepTrack.Client
         private void OnMainFormLoaded(object sender, EventArgs e)
         {
             UpdateProjectUI();
+            UpdateButtonsUI();
         }
 
         private void UpdateTaskUI(int projectId)
@@ -131,35 +149,9 @@ namespace KeepCalm_KeepTrack.Client
                     dataLayout.Controls.Add(taskButton);
                 }
             }
+
+            UpdateButtonsUI();
         }
-
-        //public void UpdateTimeFrameUI(int taskId)
-        //{
-        //    List<TaskEntity>? taskList = Db.GetTaskListForProjectWithId(projectId);
-        //    if (taskList == null || taskList.Count <= 0)
-        //    {
-        //        return;
-        //    }
-
-        //    dataLayout.Controls.Clear();
-
-        //    foreach (TaskEntity task in taskList)
-        //    {
-        //        Button taskButton = ButtonFactory.CreateButton(task);
-
-        //        taskButton.Tag = task.TaskId;
-        //        taskButton.Text = task.TaskName;
-        //        buttonsTooltip.SetToolTip(taskButton, task.TaskDescription);
-
-        //        taskButton.Click += OnTaskButtonClicked;
-
-        //        dataLayout.Controls.Add(taskButton);
-        //    }
-
-        //    selectedProjectId = projectId;
-        //    DataLayoutState = DataLayoutState.TASK;
-        //    titleLabel.Text = TASK_TITLE;
-        //}
 
         private async void OnTaskButtonClicked(object? sender, EventArgs e)
         {
@@ -251,6 +243,8 @@ namespace KeepCalm_KeepTrack.Client
                     UpdateTaskUI(selectedProjectId);
                     break;
             }
+
+            UpdateButtonsUI();
         }
     }
 }
