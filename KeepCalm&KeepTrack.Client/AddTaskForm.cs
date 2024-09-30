@@ -9,6 +9,7 @@ namespace KeepCalm_KeepTrack.Client
         private const string NO_NAME_INFO = "You have to insert a task name!";
         private const string NO_PROJECT_ID_INFO = "You have to select a project before adding a task!";
         private const string TASK_ADDED_INFO = "New task added to database";
+        private const string TASK_NOT_ADDED_INFO = "Task cannot be added due to errors!";
 
         private readonly SqlDatabase db;
         private readonly int selectedProjectId;
@@ -55,7 +56,12 @@ namespace KeepCalm_KeepTrack.Client
                 return;
             }
 
-            await db.AddTaskAsync(taskName, taskDescription, selectedProjectId);
+            if (!await db.AddTaskAsync(taskName, taskDescription, selectedProjectId))
+            {
+                PrintInfo(TASK_NOT_ADDED_INFO);
+
+                return;
+            }
 
             PrintInfo(TASK_ADDED_INFO);
 

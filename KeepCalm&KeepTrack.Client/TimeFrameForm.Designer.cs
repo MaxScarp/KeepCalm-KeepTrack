@@ -119,7 +119,6 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Time Frame Details";
-            FormClosed += OnTimeFrameFormClosed;
             Load += OnTimeFrameFormLoaded;
             ResumeLayout(false);
             PerformLayout();

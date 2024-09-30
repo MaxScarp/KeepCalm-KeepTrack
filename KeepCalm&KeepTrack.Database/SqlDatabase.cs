@@ -11,6 +11,23 @@ namespace KeepCalm_KeepTrack.Database
             dbFactory = new ApplicationDbContextFactory();
         }
 
+        public async Task<bool> UpdateTimeFrame(TimeFrameEntity timeFrame)
+        {
+            if (dbFactory == null) return false;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                timeFrame.TimeFrameEnd = DateTime.Now;
+                timeFrame.TimeFrameTime = timeFrame.TimeFrameEnd - timeFrame.TimeFrameStart;
+
+                db.TimeFrameTable.Update(timeFrame);
+
+                await db.SaveChangesAsync();
+
+                return true;
+            }
+        }
+
         public List<TimeFrameEntity>? GetTimeFrameListForTaskWithId(int taskId)
         {
             if (dbFactory == null) return null;
@@ -21,7 +38,7 @@ namespace KeepCalm_KeepTrack.Database
             }
         }
 
-        public async Task<TimeFrameEntity?> AddEmptyTimeFrameAsync(int taskId)
+        public async Task<TimeFrameEntity?> AddTimeFrameAsync(int taskId)
         {
             if (dbFactory == null) return null;
 
@@ -29,9 +46,9 @@ namespace KeepCalm_KeepTrack.Database
             {
                 TimeFrameEntity timeFrame = new TimeFrameEntity()
                 {
-                    TimeFrameStart = DateTime.MinValue,
-                    TimeFrameEnd = DateTime.MinValue,
-                    TimeFrameTime = TimeSpan.MinValue,
+                    TimeFrameStart = DateTime.Now,
+                    TimeFrameEnd = new DateTime(),
+                    TimeFrameTime = new TimeSpan(),
                     TaskId = taskId
                 };
 
@@ -53,9 +70,9 @@ namespace KeepCalm_KeepTrack.Database
             }
         }
 
-        public async Task AddTaskAsync(string taskName, string taskDescription, int projectId)
+        public async Task<bool> AddTaskAsync(string taskName, string taskDescription, int projectId)
         {
-            if (dbFactory == null) return;
+            if (dbFactory == null) return false;
 
             using (ApplicationDbContext db = dbFactory.CreateDbContext())
             {
@@ -69,6 +86,8 @@ namespace KeepCalm_KeepTrack.Database
                 await db.TaskTable.AddAsync(task);
 
                 await db.SaveChangesAsync();
+
+                return true;
             }
         }
 
@@ -92,9 +111,9 @@ namespace KeepCalm_KeepTrack.Database
             }
         }
 
-        public async Task AddProjectAsync(string projectName, string projectDescription)
+        public async Task<bool> AddProjectAsync(string projectName, string projectDescription)
         {
-            if (dbFactory == null) return;
+            if (dbFactory == null) return false;
 
             using (ApplicationDbContext db = dbFactory.CreateDbContext())
             {
@@ -107,40 +126,9 @@ namespace KeepCalm_KeepTrack.Database
                 await db.ProjectTable.AddAsync(project);
 
                 await db.SaveChangesAsync();
+
+                return true;
             }
         }
-
-        #region "DEBUG"
-        public async Task AddTestTimeFrame()
-        {
-            if (dbFactory == null) return;
-
-            using (ApplicationDbContext db = dbFactory.CreateDbContext())
-            {
-                TaskEntity? task = await db.TaskTable.FindAsync(1);
-                if (task == null)
-                {
-                    return;
-                }
-
-                DateTime startTime = DateTime.Now;
-                DateTime endTime = DateTime.Now.AddSeconds(120);
-                TimeSpan totalTime = endTime - startTime;
-
-                TimeFrameEntity timeFrame = new TimeFrameEntity()
-                {
-                    TaskEntity = task,
-                    TaskId = task.ProjectId,
-                    TimeFrameStart = startTime,
-                    TimeFrameEnd = endTime,
-                    TimeFrameTime = totalTime
-                };
-
-                await db.TimeFrameTable.AddAsync(timeFrame);
-
-                await db.SaveChangesAsync();
-            }
-        }
-        #endregion
     }
 }

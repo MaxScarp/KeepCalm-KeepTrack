@@ -185,14 +185,8 @@ namespace KeepCalm_KeepTrack.Client
                 return;
             }
 
-            List<TimeFrameEntity>? timeFrameEntityList = db.GetTimeFrameListForTaskWithId(taskId);
-            if (timeFrameEntityList == null || timeFrameEntityList.Count <= 0)
-            {
-                TimeFrameForm timeFrameForm = new TimeFrameForm(taskId, selectedTask.TaskName, selectedTask.TaskDescription, db);
-                timeFrameForm.Show();
-
-                return;
-            }
+            TimeFrameForm timeFrameForm = new TimeFrameForm(taskId, selectedTask.TaskName, selectedTask.TaskDescription, db);
+            timeFrameForm.Show();
         }
 
         private void UpdateProjectUI()

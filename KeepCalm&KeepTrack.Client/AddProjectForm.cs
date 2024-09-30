@@ -8,6 +8,7 @@ namespace KeepCalm_KeepTrack.Client
 
         private const string NO_NAME_INFO = "You have to insert a project name!";
         private const string PROJECT_ADDED_INFO = "New project added to database";
+        private const string PROJECT_NOT_ADDED_INFO = "Project cannot be added due to errors!";
 
         private readonly SqlDatabase db;
 
@@ -43,7 +44,12 @@ namespace KeepCalm_KeepTrack.Client
                 return;
             }
 
-            await db.AddProjectAsync(projectName, projectDescription);
+            if (!await db.AddProjectAsync(projectName, projectDescription))
+            {
+                PrintInfo(PROJECT_NOT_ADDED_INFO);
+
+                return;
+            }
 
             PrintInfo(PROJECT_ADDED_INFO);
 
