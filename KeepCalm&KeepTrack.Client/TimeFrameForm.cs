@@ -112,5 +112,13 @@ namespace KeepCalm_KeepTrack.Client
 
             Close();
         }
+
+        private void OnTimeFrameFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isTimerStarted)
+            {
+                OnStartStopButtonClicked(sender, e);
+            }
+        }
     }
 }

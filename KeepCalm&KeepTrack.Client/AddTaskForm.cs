@@ -104,5 +104,10 @@ namespace KeepCalm_KeepTrack.Client
 
             infoLabelCleaningTimer.Start();
         }
+
+        private void OnAddTaskFormClosing(object sender, FormClosingEventArgs e)
+        {
+            OnCustomClosed?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

@@ -128,6 +128,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Task Details";
+            FormClosing += OnAddTaskFormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
