@@ -34,7 +34,6 @@
             addTimeFrameButton = new Button();
             backButton = new Button();
             dataLayout = new FlowLayoutPanel();
-            verticalScrollBar = new VScrollBar();
             titleLabel = new Label();
             buttonsTooltip = new ToolTip(components);
             SuspendLayout();
@@ -105,19 +104,13 @@
             // 
             // dataLayout
             // 
+            dataLayout.AutoScroll = true;
             dataLayout.BackColor = Color.DarkGray;
             dataLayout.BackgroundImageLayout = ImageLayout.None;
             dataLayout.Location = new Point(15, 97);
             dataLayout.Name = "dataLayout";
-            dataLayout.Size = new Size(588, 292);
+            dataLayout.Size = new Size(612, 292);
             dataLayout.TabIndex = 5;
-            // 
-            // verticalScrollBar
-            // 
-            verticalScrollBar.Location = new Point(606, 97);
-            verticalScrollBar.Name = "verticalScrollBar";
-            verticalScrollBar.Size = new Size(21, 292);
-            verticalScrollBar.TabIndex = 6;
             // 
             // titleLabel
             // 
@@ -136,7 +129,6 @@
             BackColor = Color.DimGray;
             ClientSize = new Size(642, 450);
             Controls.Add(titleLabel);
-            Controls.Add(verticalScrollBar);
             Controls.Add(dataLayout);
             Controls.Add(backButton);
             Controls.Add(addTimeFrameButton);
@@ -161,7 +153,6 @@
         private Button addTimeFrameButton;
         private Button backButton;
         private FlowLayoutPanel dataLayout;
-        private VScrollBar verticalScrollBar;
         private Label titleLabel;
         private ToolTip buttonsTooltip;
     }
