@@ -30,15 +30,14 @@
         {
             infoLabel = new Label();
             closeButton = new Button();
-            projectDescriptionTextBox = new TextBox();
-            projectNameTextBox = new TextBox();
+            projectNameComboBox = new ComboBox();
             SuspendLayout();
             // 
             // infoLabel
             // 
-            infoLabel.Location = new Point(12, 160);
+            infoLabel.Location = new Point(12, 53);
             infoLabel.Name = "infoLabel";
-            infoLabel.Size = new Size(419, 85);
+            infoLabel.Size = new Size(419, 192);
             infoLabel.TabIndex = 4;
             infoLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -58,30 +57,17 @@
             closeButton.UseVisualStyleBackColor = false;
             closeButton.Click += OnCloseButtonClicked;
             // 
-            // projectDescriptionTextBox
+            // projectNameComboBox
             // 
-            projectDescriptionTextBox.BackColor = Color.Black;
-            projectDescriptionTextBox.Enabled = false;
-            projectDescriptionTextBox.ForeColor = Color.Gainsboro;
-            projectDescriptionTextBox.Location = new Point(12, 53);
-            projectDescriptionTextBox.MaxLength = 2048;
-            projectDescriptionTextBox.Multiline = true;
-            projectDescriptionTextBox.Name = "projectDescriptionTextBox";
-            projectDescriptionTextBox.Size = new Size(419, 104);
-            projectDescriptionTextBox.TabIndex = 1;
-            projectDescriptionTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // projectNameTextBox
-            // 
-            projectNameTextBox.BackColor = Color.Black;
-            projectNameTextBox.Enabled = false;
-            projectNameTextBox.ForeColor = Color.Gainsboro;
-            projectNameTextBox.Location = new Point(12, 12);
-            projectNameTextBox.MaxLength = 255;
-            projectNameTextBox.Name = "projectNameTextBox";
-            projectNameTextBox.Size = new Size(419, 35);
-            projectNameTextBox.TabIndex = 0;
-            projectNameTextBox.TextAlign = HorizontalAlignment.Center;
+            projectNameComboBox.BackColor = Color.Black;
+            projectNameComboBox.ForeColor = Color.Gainsboro;
+            projectNameComboBox.FormattingEnabled = true;
+            projectNameComboBox.Location = new Point(12, 12);
+            projectNameComboBox.Name = "projectNameComboBox";
+            projectNameComboBox.Size = new Size(419, 38);
+            projectNameComboBox.Sorted = true;
+            projectNameComboBox.TabIndex = 7;
+            projectNameComboBox.SelectedIndexChanged += OnProjectNameComboBoxSelectedIndexChanged;
             // 
             // ShowTotalTimeForm
             // 
@@ -89,10 +75,9 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.DimGray;
             ClientSize = new Size(443, 308);
+            Controls.Add(projectNameComboBox);
             Controls.Add(closeButton);
             Controls.Add(infoLabel);
-            Controls.Add(projectDescriptionTextBox);
-            Controls.Add(projectNameTextBox);
             Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.Gainsboro;
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -104,13 +89,11 @@
             FormClosing += OnShowTotalTimeFormClosing;
             Load += OnShowTotalTimeFormLoaded;
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
         private Label infoLabel;
         private Button closeButton;
-        private TextBox projectDescriptionTextBox;
-        private TextBox projectNameTextBox;
+        private ComboBox projectNameComboBox;
     }
 }

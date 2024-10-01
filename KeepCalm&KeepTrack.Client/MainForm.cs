@@ -15,6 +15,7 @@ namespace KeepCalm_KeepTrack.Client
 
         private AddProjectForm? addProjectForm;
         private AddTaskForm? addTaskForm;
+        private ShowTotalTimeForm? showTotalTimeForm;
 
         public MainForm()
         {
@@ -32,18 +33,28 @@ namespace KeepCalm_KeepTrack.Client
 
         private void OnShowTotalTimeButtonClicked(object sender, EventArgs e)
         {
-            //TODO - cercare di selezionare un projectID in qualche maniera ed utilizzarlo, forse bisogna cambiare form eccetera
-            if (selectedProjectId <= -1)
+            showTotalTimeForm = new ShowTotalTimeForm(db);
+            showTotalTimeForm.Show();
+
+            showTotalTimeForm.OnCustomClosed += ShowTotalTimeForm_OnCustomClosed;
+
+            Enabled = false;
+        }
+
+        private void ShowTotalTimeForm_OnCustomClosed(object? sender, EventArgs e)
+        {
+            if (showTotalTimeForm == null)
             {
                 return;
             }
 
-            addTaskForm = new AddTaskForm(db, selectedProjectId);
-            addTaskForm.Show();
+            showTotalTimeForm.OnCustomClosed -= ShowTotalTimeForm_OnCustomClosed;
 
-            addTaskForm.OnCustomClosed += AddTaskForm_OnCustomClosed;
+            CheckDataLayoutStateAndUpdateUI();
 
-            Enabled = false;
+            showTotalTimeForm = null;
+
+            Enabled = true;
         }
 
         private void OnAddTaskButtonClicked(object sender, EventArgs e)

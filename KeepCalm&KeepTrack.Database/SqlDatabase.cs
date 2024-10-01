@@ -1,4 +1,5 @@
 ﻿using KeepCalm_KeepTrack.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeepCalm_KeepTrack.Database
 {
@@ -9,6 +10,16 @@ namespace KeepCalm_KeepTrack.Database
         public SqlDatabase()
         {
             dbFactory = new ApplicationDbContextFactory();
+        }
+
+        public async Task<ProjectEntity?> GetProjectWithNameAsync(string projectName)
+        {
+            if (dbFactory == null) return null;
+
+            using (ApplicationDbContext db = dbFactory.CreateDbContext())
+            {
+                return await db.ProjectTable.FirstOrDefaultAsync(p => p.ProjectName == projectName);
+            }
         }
 
         public async Task<bool> UpdateTimeFrame(TimeFrameEntity timeFrame)
